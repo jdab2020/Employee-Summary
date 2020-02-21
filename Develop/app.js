@@ -7,14 +7,16 @@ const fs = require("fs");
 
 const outputPath = path.resolve(__dirname, "output", "team.html");
 
-const render = require("./lib/htmlRenderer");
+// const render = require("./lib/htmlRenderer.js");
 
 const teamMembers = [];
 const idArray = [];
 
 function appMenu() {
+  // my added code (added teamHTML as parameters)
+  let teamHTML = "";
 
-  function createManager() {
+  function createManager(teamHTML) {
     console.log("Please build your team");
     inquirer.prompt([
       {
@@ -74,11 +76,18 @@ function appMenu() {
       const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
       teamMembers.push(manager);
       idArray.push(answers.managerId);
-      createTeam();
+//////////////////////////////////////////////////////////////////   
+      // my added code
+      // eval() populates the template literal
+      let teamMember = fs.readFileSync("templates/manager.html");
+      teamHTML = eval('`'+ teamMember +'`');
+//////////////////////////////////////////////////////////////////
+
+      createTeam(teamHTML);
     });
   }
 
-  function createTeam() {
+  function createTeam(teamHTML) {
 
     inquirer.prompt([
       {
@@ -94,18 +103,18 @@ function appMenu() {
     ]).then(userChoice => {
       switch(userChoice.memberChoice) {
       case "Engineer":
-        addEngineer();
+        addEngineer(teamHTML);
         break;
       case "Intern":
-        addIntern();
+        addIntern(teamHTML);
         break;
       default:
-        buildTeam();
+        buildTeam(teamHTML);
       }
     });
   }
 
-  function addEngineer() {
+  function addEngineer(teamHTML) {
     inquirer.prompt([
       {
         type: "input",
@@ -166,11 +175,17 @@ function appMenu() {
       const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
       teamMembers.push(engineer);
       idArray.push(answers.engineerId);
-      createTeam();
+///////////////////////////////////////////////////////////////////
+      // my added code
+      // eval() populates the template literal
+      let teamMember = fs.readFileSync("templates/engineer.html");
+      teamHTML = teamHTML + "\n" + eval('`'+ teamMember +'`');
+///////////////////////////////////////////////////////////////////
+      createTeam(teamHTML);
     });
   }
 
-  function addIntern() {
+  function addIntern(teamHTML) {
     inquirer.prompt([
       {
         type: "input",
@@ -231,12 +246,28 @@ function appMenu() {
       const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
       teamMembers.push(intern);
       idArray.push(answers.internId);
-      createTeam();
+///////////////////////////////////////////////////////////////
+      // my added code
+      // eval() populates the template literal
+      let teamMember = fs.readFileSync("templates/intern.html");
+      teamHTML = teamHTML + "\n" + eval('`'+ teamMember +'`');
+///////////////////////////////////////////////////////////////
+      createTeam(teamHTML);
     });
   }
 
-  function buildTeam() {
-    fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+  function buildTeam(teamHTML) {
+    // console.log(teamHTML)
+    // fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////    
+      // my added code
+      // eval() populates the template literal
+    const mainHTML = fs.readFileSync("templates/main.html");
+    teamHTML = eval('`' + mainHTML + '`');
+    fs.writeFileSync(outputPath,teamHTML,"utf-8")
+///////////////////////////////////////////////////////////////////////////////////////////////////
   }
 
   createManager();
@@ -245,4 +276,3 @@ function appMenu() {
 
 
 appMenu();
-
