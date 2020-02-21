@@ -76,12 +76,12 @@ function appMenu() {
       const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
       teamMembers.push(manager);
       idArray.push(answers.managerId);
-//////////////////////////////////////////////////////////////////   
+      //////////////////////////////////////////////////////////////////   
       // my added code
       // eval() populates the template literal
       let teamMember = fs.readFileSync("templates/manager.html");
-      teamHTML = eval('`'+ teamMember +'`');
-//////////////////////////////////////////////////////////////////
+      teamHTML = eval('`' + teamMember + '`');
+      //////////////////////////////////////////////////////////////////
 
       createTeam(teamHTML);
     });
@@ -101,15 +101,15 @@ function appMenu() {
         ]
       }
     ]).then(userChoice => {
-      switch(userChoice.memberChoice) {
-      case "Engineer":
-        addEngineer(teamHTML);
-        break;
-      case "Intern":
-        addIntern(teamHTML);
-        break;
-      default:
-        buildTeam(teamHTML);
+      switch (userChoice.memberChoice) {
+        case "Engineer":
+          addEngineer(teamHTML);
+          break;
+        case "Intern":
+          addIntern(teamHTML);
+          break;
+        default:
+          buildTeam(teamHTML);
       }
     });
   }
@@ -141,7 +141,7 @@ function appMenu() {
             } else {
               return true;
             }
-                        
+
           }
           return "Please enter a positive number greater than zero.";
         }
@@ -175,12 +175,12 @@ function appMenu() {
       const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
       teamMembers.push(engineer);
       idArray.push(answers.engineerId);
-///////////////////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////////////////////
       // my added code
       // eval() populates the template literal
       let teamMember = fs.readFileSync("templates/engineer.html");
-      teamHTML = teamHTML + "\n" + eval('`'+ teamMember +'`');
-///////////////////////////////////////////////////////////////////
+      teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
+      ///////////////////////////////////////////////////////////////////
       createTeam(teamHTML);
     });
   }
@@ -212,7 +212,7 @@ function appMenu() {
             } else {
               return true;
             }
-                        
+
           }
           return "Please enter a positive number greater than zero.";
         }
@@ -246,12 +246,12 @@ function appMenu() {
       const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
       teamMembers.push(intern);
       idArray.push(answers.internId);
-////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////
       // my added code
       // eval() populates the template literal
       let teamMember = fs.readFileSync("templates/intern.html");
-      teamHTML = teamHTML + "\n" + eval('`'+ teamMember +'`');
-//////////////////////////////////////////////////////////////////////////
+      teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
+      //////////////////////////////////////////////////////////////////////////
       createTeam(teamHTML);
     });
   }
@@ -259,13 +259,13 @@ function appMenu() {
   function buildTeam(teamHTML) {
     // console.log(teamHTML)
     // fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
-////////////////////////////////////////////////////////////////////////////////////////////////////    
-      // my added code
-      // eval() populates the template literal
+    ////////////////////////////////////////////////////////////////////////////////////////////////////    
+    // my added code
+    // eval() populates the template literal
     const mainHTML = fs.readFileSync("templates/main.html");
     teamHTML = eval('`' + mainHTML + '`');
-    fs.writeFileSync(outputPath,teamHTML,"utf-8")
-///////////////////////////////////////////////////////////////////////////////////////////////////
+    fs.writeFileSync(outputPath, teamHTML, "utf-8")
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
   }
 
   createManager();
