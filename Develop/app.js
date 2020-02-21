@@ -246,12 +246,12 @@ function appMenu() {
       const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
       teamMembers.push(intern);
       idArray.push(answers.internId);
-///////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
       // my added code
       // eval() populates the template literal
       let teamMember = fs.readFileSync("templates/intern.html");
       teamHTML = teamHTML + "\n" + eval('`'+ teamMember +'`');
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
       createTeam(teamHTML);
     });
   }
@@ -259,8 +259,6 @@ function appMenu() {
   function buildTeam(teamHTML) {
     // console.log(teamHTML)
     // fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////    
       // my added code
       // eval() populates the template literal
